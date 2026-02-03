@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* Fallback for GardensC if not locally available yet */
+@font-face {
+    font-family: 'GardensC';
+    src: url('/assets/fonts/GardensC.otf') format('opentype'),
+        url('/assets/fonts/GardensC.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #314aa2;
+    --color-secondary: #0F172A;
+    --color-accent: #06B6D4;
+    --color-body-color: #64748B;
+    --color-heading-color: #1E293B;
+    --color-light-bg: #F8FAFC;
+
+    --font-heading: "Inter", sans-serif;
+    --font-body: "Inter", sans-serif;
+    --font-brand: "GardensC", sans-serif;
+
+    --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    --shadow-card: 0 0 40px rgba(0, 0, 0, 0.05);
+}
+
+@layer base {
+
+    html,
+    body {
+        @apply font-body text-body-color;
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-heading font-bold text-heading-color;
+    }
+}
+
+@keyframes mesh {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+        transform: translate(100px, -100px) scale(1.1);
+    }
+
+    66% {
+        transform: translate(-50px, 80px) scale(0.9);
+    }
+
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+.animate-mesh {
+    animation: mesh 12s ease-in-out infinite alternate;
+}
