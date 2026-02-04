@@ -33,7 +33,7 @@ const Hero = () => {
                             <p className="text-lg text-body-color mb-6 sm:mb-8 leading-relaxed" data-aos="fade-up" data-aos-delay="600">
                                 Organizations collect massive volumes of information, yet struggle to convert it into meaningful insight. We help companies cut through noise, uncover truth, and act with confidence through our Research-as-a-Service model.
                             </p>
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start" data-aos="fade-up" data-aos-delay="700">
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                                 <Link to="/contact" className="inline-flex items-center justify-center py-4 px-8 rounded-full bg-primary text-white font-semibold shadow-lg shadow-primary/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                                     Get Started
                                 </Link>
