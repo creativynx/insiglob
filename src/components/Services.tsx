@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { FaBuilding, FaUsers, FaChartLine, FaDatabase, FaCogs } from 'react-icons/fa';
 
 const Services = () => {

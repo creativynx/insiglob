@@ -1,8 +1,7 @@
-import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { FaLinkedin, FaTwitter, FaFacebook } from 'react-icons/fa';
 import { MapPin, Mail, Phone } from 'lucide-react';
-import logo from '../assets/logo.png';
+import logoName from '../assets/insiglob-logo.png';
 
 const Footer = () => {
     return (
@@ -11,8 +10,8 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-12 mb-16">
                     <div className="xl:col-span-1">
                         <RouterLink to="/" className="inline-flex items-center gap-1 mb-6 group">
-                            <img src={logo} alt="Insiglob" className="h-10 w-auto group-hover:opacity-90 transition-opacity" />
-                            <span className="font-brand text-3xl text-primary lowercase tracking-tight">insiglob</span>
+                            <img src={logoName} alt="Insiglob" className="h-10 w-auto group-hover:opacity-90 transition-opacity" />
+                            {/* <span className="font-brand text-3xl text-primary lowercase tracking-tight">insiglob</span> */}
                         </RouterLink>
                         <p className="text-body-color text-base mb-6 leading-relaxed">
                             Let’s remove uncertainty from your decisions. Let’s replace confusion with clarity.

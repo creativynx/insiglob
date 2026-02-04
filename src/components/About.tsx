@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import aboutImg from '../assets/undraw_teamwork_zplp.svg';
 import { ChevronDown } from 'lucide-react';
 

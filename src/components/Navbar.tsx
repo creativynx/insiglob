@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link as ScrollLink, scroller } from 'react-scroll';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import { Menu } from 'lucide-react';
-import logo from '../assets/logo.png';
+import logoName from '../assets/insiglob-logo.png';
 
 const Navbar = () => {
     const [sticky, setSticky] = useState(false);
@@ -62,16 +62,16 @@ const Navbar = () => {
                         className="navbar-brand cursor-pointer py-0 flex items-center gap-0 sm:gap-1 group shrink-0"
                         to="/"
                     >
-                        <img src={logo} alt="Insiglob" className="h-6 sm:h-8 w-auto group-hover:opacity-90 transition-opacity" />
-                        <span className="font-brand text-2xl sm:text-3xl text-primary lowercase tracking-tight">insiglob</span>
+                        <img src={logoName} alt="Insiglob" className="h-6 sm:h-8 w-auto group-hover:opacity-90 transition-opacity" />
+                        {/* <span className="font-brand text-2xl sm:text-3xl text-primary lowercase tracking-tight">insiglob</span> */}
                     </RouterLink>
 
                     <button
-                        className="block lg:hidden focus:outline-none text-heading-color"
+                        className="block lg:hidden focus:outline-none text-primary"
                         type="button"
                         onClick={() => setOpen(!open)}
                     >
-                        <Menu size={32} />
+                        <Menu size={24} />
                     </button>
 
                     <div className={classNames("w-full lg:w-auto", {
