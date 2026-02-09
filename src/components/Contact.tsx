@@ -20,28 +20,35 @@ const Contact = () => {
         setLoading(true);
         setStatus({ type: null, message: '' });
 
-        try {
-            const response = await fetch('http://localhost:5000/send-email', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                setStatus({ type: 'success', message: 'Message sent successfully!' });
-                setFormData({ name: '', email: '', subject: 'General Inquiry', message: '' });
-            } else {
-                setStatus({ type: 'error', message: data.message || 'Failed to send message.' });
-            }
-        } catch (error) {
-            setStatus({ type: 'error', message: 'Something went wrong. Please try again later.' });
-        } finally {
+        // Simulate network request
+        setTimeout(() => {
             setLoading(false);
-        }
+            setStatus({ type: 'success', message: 'Message sent successfully! (Demo mode)' });
+            setFormData({ name: '', email: '', subject: 'General Inquiry', message: '' });
+        }, 1500);
+
+        // try {
+        //     const response = await fetch('http://localhost:5000/send-email', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify(formData),
+        //     });
+
+        //     const data = await response.json();
+
+        //     if (response.ok) {
+        //         setStatus({ type: 'success', message: 'Message sent successfully!' });
+        //         setFormData({ name: '', email: '', subject: 'General Inquiry', message: '' });
+        //     } else {
+        //         setStatus({ type: 'error', message: data.message || 'Failed to send message.' });
+        //     }
+        // } catch (error) {
+        //     setStatus({ type: 'error', message: 'Something went wrong. Please try again later.' });
+        // } finally {
+        //     setLoading(false);
+        // }
     };
 
     return (
