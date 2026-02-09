@@ -11,8 +11,8 @@ const Services = () => {
     ];
 
     return (
-        <section id="service" className="py-24 bg-light-bg relative">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section id="service" className="bg-light-bg relative">
+            <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
                 <div className="text-center max-w-2xl mx-auto mb-16">
                     <span className="text-primary font-bold tracking-wider uppercase text-sm mb-3 block">What We Do</span>
                     <h2 className="text-3xl lg:text-4xl font-bold text-heading-color mb-6">Research-as-a-Service</h2>

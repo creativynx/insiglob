@@ -1,7 +1,49 @@
-// import React from 'react';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { useState } from 'react';
+import { Mail, Phone, MapPin, Loader2 } from 'lucide-react';
 
 const Contact = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        subject: 'General Inquiry',
+        message: ''
+    });
+    const [loading, setLoading] = useState(false);
+    const [status, setStatus] = useState<{ type: 'success' | 'error' | null, message: string }>({ type: null, message: '' });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        setStatus({ type: null, message: '' });
+
+        try {
+            const response = await fetch('http://localhost:5000/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setStatus({ type: 'success', message: 'Message sent successfully!' });
+                setFormData({ name: '', email: '', subject: 'General Inquiry', message: '' });
+            } else {
+                setStatus({ type: 'error', message: data.message || 'Failed to send message.' });
+            }
+        } catch (error) {
+            setStatus({ type: 'error', message: 'Something went wrong. Please try again later.' });
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <section id="contact" className="py-24 bg-secondary relative overflow-hidden">
             {/* Background elements */}
@@ -28,7 +70,6 @@ const Contact = () => {
                                     <div>
                                         <h5 className="font-bold text-white mb-1 text-lg">Email Us</h5>
                                         <p className="text-gray-200">contact@insiglob.com</p>
-                                        <p className="text-gray-200">info@insiglob.com</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start group">
@@ -58,21 +99,49 @@ const Contact = () => {
                             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-bl-full -mr-10 -mt-10 pointer-events-none"></div>
 
                             <h3 className="text-2xl font-bold text-heading-color mb-8 relative z-10">Send us a Message</h3>
-                            <form className="relative z-10">
+
+                            {status.message && (
+                                <div className={`mb-6 p-4 rounded-lg ${status.type === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`}>
+                                    {status.message}
+                                </div>
+                            )}
+
+                            <form className="relative z-10" onSubmit={handleSubmit}>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                                     <div className="group">
                                         <label className="block text-sm font-semibold text-heading-color mb-2 group-focus-within:text-primary transition-colors">Full Name</label>
-                                        <input type="text" placeholder="John Doe" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-5 py-4 text-body-color focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-gray-400" />
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                            placeholder="John Doe"
+                                            required
+                                            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-5 py-4 text-body-color focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-gray-400"
+                                        />
                                     </div>
                                     <div className="group">
                                         <label className="block text-sm font-semibold text-heading-color mb-2 group-focus-within:text-primary transition-colors">Email Address</label>
-                                        <input type="email" placeholder="john@company.com" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-5 py-4 text-body-color focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-gray-400" />
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            placeholder="john@company.com"
+                                            required
+                                            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-5 py-4 text-body-color focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-gray-400"
+                                        />
                                     </div>
                                 </div>
                                 <div className="mb-6 group">
                                     <label className="block text-sm font-semibold text-heading-color mb-2 group-focus-within:text-primary transition-colors">Subject</label>
                                     <div className="relative">
-                                        <select className="w-full bg-gray-50 border border-gray-200 rounded-xl px-5 py-4 text-body-color focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all appearance-none cursor-pointer">
+                                        <select
+                                            name="subject"
+                                            value={formData.subject}
+                                            onChange={handleChange}
+                                            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-5 py-4 text-body-color focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all appearance-none cursor-pointer"
+                                        >
                                             <option>General Inquiry</option>
                                             <option>Research Partnership</option>
                                             <option>Platform Support</option>
@@ -84,10 +153,29 @@ const Contact = () => {
                                 </div>
                                 <div className="mb-8 group">
                                     <label className="block text-sm font-semibold text-heading-color mb-2 group-focus-within:text-primary transition-colors">Message</label>
-                                    <textarea rows={4} placeholder="Tell us about your project..." className="w-full bg-gray-50 border border-gray-200 rounded-xl px-5 py-4 text-body-color focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all resize-none placeholder:text-gray-400"></textarea>
+                                    <textarea
+                                        name="message"
+                                        value={formData.message}
+                                        onChange={handleChange}
+                                        rows={4}
+                                        placeholder="Tell us about your project..."
+                                        required
+                                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-5 py-4 text-body-color focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all resize-none placeholder:text-gray-400"
+                                    ></textarea>
                                 </div>
-                                <button type="submit" className="w-full bg-primary text-white font-bold text-lg py-4 rounded-xl hover:bg-blue-700 shadow-xl shadow-primary/20 transform hover:-translate-y-1active:translate-y-0 transition-all duration-300">
-                                    Send Message
+                                <button
+                                    type="submit"
+                                    disabled={loading}
+                                    className="w-full bg-primary text-white font-bold text-lg py-4 rounded-xl hover:bg-blue-700 shadow-xl shadow-primary/20 transform hover:-translate-y-1 active:translate-y-0 transition-all duration-300 flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+                                >
+                                    {loading ? (
+                                        <>
+                                            <Loader2 className="animate-spin mr-2" />
+                                            Sending...
+                                        </>
+                                    ) : (
+                                        'Send Message'
+                                    )}
                                 </button>
                             </form>
                         </div>

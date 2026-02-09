@@ -51,10 +51,10 @@ const Audience = () => {
     ];
 
     return (
-        <section id="audience" className="py-24 bg-white relative">
+        <section id="audience" className="bg-light-bg relative">
             <div className="absolute top-0 right-0 w-1/3 h-full bg-light-bg -z-10 rounded-l-[100px]"></div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
                 <div className="text-center max-w-2xl mx-auto mb-16">
                     <span className="text-primary font-bold tracking-wider uppercase text-sm mb-3 block">Target Audience</span>
                     <h2 className="text-3xl lg:text-4xl font-bold text-heading-color mb-4">Who We Serve</h2>
@@ -63,17 +63,17 @@ const Audience = () => {
 
                 <div className="flex flex-col items-center">
                     {/* Tabs */}
-                    <div className="flex flex-wrap justify-center gap-4 mb-14 bg-light-bg p-2 rounded-full inline-flex">
+                    <div className="flex flex-col md:flex-row w-full md:w-auto justify-center gap-3 md:gap-4 mb-10 md:mb-14 px-4 md:px-2 md:bg-light-bg md:rounded-full pb-4 md:pb-2">
                         {tabs.map((tab, index) => (
                             <button
                                 key={index}
                                 onClick={() => setActiveTab(index)}
-                                className={classNames("py-3 px-8 rounded-full text-sm lg:text-base font-semibold transition-all duration-300 flex items-center", {
-                                    "bg-white text-primary shadow-md": activeTab === index,
-                                    "text-body-color hover:text-heading-color hover:bg-white/50": activeTab !== index
+                                className={classNames("py-4 px-6 md:px-8 rounded-xl md:rounded-full text-base font-semibold transition-all duration-300 flex items-center justify-center border", {
+                                    "bg-primary text-white shadow-lg md:bg-white md:text-primary md:shadow-md border-primary": activeTab === index,
+                                    "bg-white text-body-color border-gray-100 hover:text-heading-color hover:bg-gray-50 md:bg-transparent md:border-transparent md:hover:bg-white/50": activeTab !== index
                                 })}
                             >
-                                <span className="mr-2 text-lg">{tab.icon}</span>
+                                <span className="mr-3 text-xl md:text-lg">{tab.icon}</span>
                                 {tab.name}
                             </button>
                         ))}

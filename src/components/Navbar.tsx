@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Link as ScrollLink, scroller } from 'react-scroll';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
-import { Menu } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import logoName from '../assets/insiglob-logo.png';
 
 const Navbar = () => {
@@ -23,8 +24,8 @@ const Navbar = () => {
     const menuItems = [
         { name: 'Home', to: 'home' },
         { name: 'About', to: 'about' },
-        { name: 'Services', to: 'service' }, // Matches ID in Services.tsx
-        { name: 'Who We Serve', to: 'audience' }, // Matches ID in Audience.tsx? Need to confirm Audience ID
+        { name: 'Services', to: 'service' },
+        { name: 'Who We Serve', to: 'audience' },
         { name: 'Contact', to: 'contact' }
     ];
 
@@ -35,6 +36,22 @@ const Navbar = () => {
         }
     };
 
+    // Prevent scrolling when mobile menu is open
+    useEffect(() => {
+        if (open) {
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+            document.documentElement.style.overflow = 'unset';
+        }
+
+        return () => {
+            document.body.style.overflow = 'unset';
+            document.documentElement.style.overflow = 'unset';
+        };
+    }, [open]);
+
     // Handle scroll after navigation from another page
     useEffect(() => {
         if (isHomePage && location.state && location.state.targetSection) {
@@ -42,16 +59,15 @@ const Navbar = () => {
                 scroller.scrollTo(location.state.targetSection, {
                     duration: 500,
                     smooth: true,
-                    offset: -100, // Adjust for fixed header
+                    offset: -70,
                 });
             }, 100);
-            // Clear state after scroll
             window.history.replaceState({}, document.title);
         }
     }, [isHomePage, location]);
 
     return (
-        <header className={classNames("fixed top-0 left-0 w-full z-50 transition-all duration-300", {
+        <header className={classNames("fixed top-0 left-0 w-full z-50 transition-all duration-300 select-none", {
             "bg-white/90 backdrop-blur-md shadow-sm py-2 sm:py-3": sticky,
             "bg-transparent py-4 sm:py-6": !sticky && isHomePage,
             "bg-white shadow-sm py-2 sm:py-3": !isHomePage
@@ -63,34 +79,22 @@ const Navbar = () => {
                         to="/"
                     >
                         <img src={logoName} alt="Insiglob" className="h-6 sm:h-8 w-auto group-hover:opacity-90 transition-opacity" />
-                        {/* <span className="font-brand text-2xl sm:text-3xl text-primary lowercase tracking-tight">insiglob</span> */}
                     </RouterLink>
 
-                    <button
-                        className="block lg:hidden focus:outline-none text-primary"
-                        type="button"
-                        onClick={() => setOpen(!open)}
-                    >
-                        <Menu size={24} />
-                    </button>
-
-                    <div className={classNames("w-full lg:w-auto", {
-                        "hidden lg:block": !open,
-                        "absolute top-full left-0 bg-white shadow-xl rounded-lg p-6 lg:static lg:bg-transparent lg:shadow-none lg:p-0": open
-                    })}>
-                        <ul className="flex flex-col lg:flex-row lg:items-center lg:space-x-10">
+                    {/* Desktop Menu */}
+                    <div className="hidden lg:block">
+                        <ul className="flex flex-row items-center space-x-10">
                             {menuItems.map((item) => (
-                                <li key={item.name} className="my-2 lg:my-0">
+                                <li key={item.name}>
                                     {isHomePage ? (
                                         <ScrollLink
                                             to={item.to}
                                             spy={true}
                                             smooth={true}
-                                            offset={-100}
+                                            offset={-70}
                                             duration={500}
                                             className="text-base font-medium text-body-color hover:text-primary cursor-pointer transition-colors"
                                             activeClass="text-primary font-semibold"
-                                            onClick={() => setOpen(false)}
                                         >
                                             {item.name}
                                         </ScrollLink>
@@ -106,6 +110,65 @@ const Navbar = () => {
                             ))}
                         </ul>
                     </div>
+
+                    {/* Mobile Menu Button */}
+                    <button
+                        className="block lg:hidden focus:outline-none text-primary"
+                        type="button"
+                        onClick={() => setOpen(!open)}
+                    >
+                        {open ? <X size={24} /> : <Menu size={24} />}
+                    </button>
+
+                    {/* Mobile Menu Portal */}
+                    {open && createPortal(
+                        <div
+                            className="fixed inset-0 bg-white z-[9999] flex flex-col justify-center items-center animate-fadeIn"
+                            onClick={() => setOpen(false)}
+                        >
+                            <button
+                                className="absolute top-6 right-6 p-2 text-heading-color hover:text-primary transition-colors focus:outline-none"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setOpen(false);
+                                }}
+                            >
+                                <X size={32} />
+                            </button>
+
+                            <ul
+                                className="flex flex-col items-center space-y-8 text-center"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                {menuItems.map((item, index) => (
+                                    <li key={item.name} className="opacity-0 animate-fadeIn" style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'forwards' }}>
+                                        {isHomePage ? (
+                                            <ScrollLink
+                                                to={item.to}
+                                                spy={true}
+                                                smooth={true}
+                                                offset={-70}
+                                                duration={500}
+                                                className="text-2xl font-bold text-heading-color hover:text-primary cursor-pointer transition-colors"
+                                                activeClass="text-primary"
+                                                onClick={() => setOpen(false)}
+                                            >
+                                                {item.name}
+                                            </ScrollLink>
+                                        ) : (
+                                            <span
+                                                onClick={() => handleNavClick(item.to)}
+                                                className="text-2xl font-bold text-heading-color hover:text-primary cursor-pointer transition-colors"
+                                            >
+                                                {item.name}
+                                            </span>
+                                        )}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>,
+                        document.body
+                    )}
                 </div>
             </div>
         </header>

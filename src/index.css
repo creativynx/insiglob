@@ -15,7 +15,7 @@
     --color-accent: #06B6D4;
     --color-body-color: #64748B;
     --color-heading-color: #1E293B;
-    --color-light-bg: #F8FAFC;
+    --color-light-bg: #f8f9fa;
 
     --font-heading: "Inter", sans-serif;
     --font-body: "Inter", sans-serif;
@@ -67,4 +67,29 @@
 
 .animate-mesh {
     animation: mesh 12s ease-in-out infinite alternate;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.5s ease-out forwards;
 }

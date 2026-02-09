@@ -206,7 +206,8 @@ const Terms = () => {
                                             <p className="mb-4">For any questions regarding these Terms:</p>
                                             <ul className="list-none space-y-1">
                                                 <li><span className="font-semibold">Company:</span> insiglob</li>
-                                                <li><span className="font-semibold">Email:</span> contact@insiglob.com</li>
+                                                <li><span className="font-semibold">Email:</span> terms@insiglob.com</li>
+                                                <li><span className="font-semibold">Phone:</span> +91 8903426268</li>
                                                 <li><span className="font-semibold">Address:</span> Chennai, Tamilnadu, India</li>
                                             </ul>
                                         </>

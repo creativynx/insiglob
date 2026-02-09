@@ -138,7 +138,7 @@ const Privacy = () => {
                                                 <li>Request deletion of your data</li>
                                                 <li>Withdraw consent for future processing</li>
                                             </ul>
-                                            <p>Requests can be sent to: Contact@insiglob.com</p>
+                                            <p>Requests can be sent to: privacy@insiglob.com</p>
                                         </>
                                     )
                                 },
@@ -170,7 +170,8 @@ const Privacy = () => {
                                             <p className="mb-4">For privacy-related concerns:</p>
                                             <ul className="list-none space-y-1">
                                                 <li><span className="font-semibold">Company:</span> insiglob</li>
-                                                <li><span className="font-semibold">Email:</span> Contact@insiglob.com</li>
+                                                <li><span className="font-semibold">Email:</span> privacy@insiglob.com</li>
+                                                <li><span className="font-semibold">Phone:</span> +91 8903426268</li>
                                                 <li><span className="font-semibold">Address:</span> Chennai, Tamilnadu, India</li>
                                             </ul>
                                         </>

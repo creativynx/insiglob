@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import aboutImg from '../assets/undraw_teamwork_zplp.svg';
+import missionImg from '../assets/undraw_group-project_kow1.svg';
+import differenceImg from '../assets/undraw_collecting_3zyb.svg';
+import philosophyImg from '../assets/undraw_ai-answers_uxgx.svg';
 import { ChevronDown } from 'lucide-react';
 
 const About = () => {
@@ -10,22 +12,39 @@ const About = () => {
     };
 
     const faqItems = [
-        { title: "Our Mission", content: "Our mission is simple yet powerful: to bring clarity from complexity by turning raw data into trusted intelligence. We believe that businesses should never have to choose between speed and accuracy. With the right research partner, you can have both — and that’s exactly what insiglob provides." },
-        { title: "What Makes insiglob Different", content: "Most research providers focus only on collecting information. We focus on creating understanding. At insiglob, every project is built on four pillars: Accuracy, Relevance, Ethics, and Scalability. This approach ensures that our clients don’t just receive data — they receive decision-ready intelligence." },
-        { title: "Our Research Philosophy", content: "We don’t believe in one-size-fits-all research. Before we collect a single data point, we ask: What decision will this data support? Who will use it? How will it create value? Only then do we design a research strategy that aligns with your real business outcomes." }
+        {
+            title: "Our Mission",
+            content: "Our mission is simple yet powerful: to bring clarity from complexity by turning raw data into trusted intelligence. We believe that businesses should never have to choose between speed and accuracy. With the right research partner, you can have both — and that’s exactly what insiglob provides.",
+            image: missionImg
+        },
+        {
+            title: "What Makes insiglob Different",
+            content: "Most research providers focus only on collecting information. We focus on creating understanding. At insiglob, every project is built on four pillars: Accuracy, Relevance, Ethics, and Scalability. This approach ensures that our clients don’t just receive data — they receive decision-ready intelligence.",
+            image: differenceImg
+        },
+        {
+            title: "Our Research Philosophy",
+            content: "We don’t believe in one-size-fits-all research. Before we collect a single data point, we ask: What decision will this data support? Who will use it? How will it create value? Only then do we design a research strategy that aligns with your real business outcomes.",
+            image: philosophyImg
+        }
     ];
 
     return (
-        <section id="about" className="py-24 bg-white relative overflow-hidden">
+        <section id="about" className="bg-light-bg relative overflow-hidden">
             {/* Decorative circle */}
             <div className="absolute -left-10 top-20 w-40 h-40 rounded-full bg-accent/5 blur-3xl"></div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-wrap items-center -mx-4">
                     <div className="w-full lg:w-1/2 px-4 mb-16 lg:mb-0" data-aos="fade-right">
                         <div className="relative">
                             <div className="absolute inset-0 bg-primary/10 rounded-3xl transform -rotate-3 translate-x-4 translate-y-4"></div>
-                            <img src={aboutImg} alt="about" className="relative z-10 w-full rounded-2xl shadow-card" />
+                            <img
+                                src={activeAccordion !== -1 ? faqItems[activeAccordion].image : missionImg}
+                                alt="about"
+                                className="relative z-10 max-h-[250px] lg:max-h-[400px] w-auto mx-auto rounded-2xl shadow-card transition-all duration-500 ease-in-out transform"
+                                key={activeAccordion} // Force re-render for animation
+                            />
                         </div>
                     </div>
                     <div className="w-full lg:w-1/2 px-4" data-aos="fade-left">
